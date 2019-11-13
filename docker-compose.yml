@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  webserver:
+    image: 'cloudwaysdev/ansiblexenial'
+    volumes:
+      - './ssh_data/authorized_keys:/root/.ssh/authorized_keys'
+    networks:
+      xenial_nw:
+        ipv4_address: 172.18.0.2
+  appserver:
+    image: 'cloudwaysdev/ansiblexenial'
+    volumes:
+      - './ssh_data/authorized_keys:/root/.ssh/authorized_keys'
+    networks:
+      xenial_nw:
+        ipv4_address: 172.18.0.3
+
+  dbserver:
+    image: 'cloudwaysdev/ansiblexenial'
+    volumes:
+      - './ssh_data/authorized_keys:/root/.ssh/authorized_keys'
+    networks:
+      xenial_nw:
+        ipv4_address: 172.18.0.4
+#
+#volumes:
+#    ssh_data: {}
+
+networks:
+  xenial_nw:
+    external:
+      name: ansible_nw
