@@ -40,11 +40,17 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-RUN mkdir /root/.ssh && touch authorized_keys /root/.ssh/
-# Volume Configuration
-VOLUME ["/root/.ssh"]
+# RUN mkdir /root/.ssh && touch authorized_keys /root/.ssh/
 
-EXPOSE 80
+RUN mkdir /root/.ssh && \
+    chmod 700 /root/.ssh && \
+    ssh-keygen -A
+# COPY ssh-find-agent.sh /root/ssh-find-agent.sh
+
 EXPOSE 22
+EXPOSE 80
+
+# Volume Configuration  
+VOLUME ["/root/.ssh/authorized_keys"]
 
 CMD ["/usr/sbin/sshd", "-D"]
